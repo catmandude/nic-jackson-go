@@ -17,7 +17,7 @@ func NewProducts(l *log.Logger) *Products {
 
 func (p *Products) ServeHTTP(rw http.ResponseWriter, h *http.Request) {
 	lp := data.GetProducts()
-	err := lp.ToJSON(lp)
+	err := lp.ToJSON(rw)
 	d, err := json.Marshal(lp)
 
 	if err != nil {
