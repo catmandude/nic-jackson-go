@@ -12,6 +12,10 @@ type Product struct {
 	UpdatedOn string
 }
 
+func GetProducts() []*Product {
+	return productList
+}
+
 var productList = []*Product{
 	&Product{
 		ID: 1,
@@ -30,5 +34,5 @@ var productList = []*Product{
 		SKU: "faa322",
 		CreatedOn: time.Now().UTC().String(),
 		UpdatedOn: time.Now().UTC().String(),
-	}
+	},
 }
