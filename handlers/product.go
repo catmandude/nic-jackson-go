@@ -36,6 +36,16 @@ func (p *Products) getProducts(rw http.ResponseWriter, h *http.Request) {
 	}
 }
 
-func (p *Products) addProduct(rw http.ResponseWriter, h *http.Request) {
+func (p *Products) addProduct(rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle POST products")
+
+	prod := &data.Product{}
+
+	err := prod.FromJSON(r.Body)
+	if err != nil {
+		http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
+	}
+
+
+
 }
