@@ -4,6 +4,8 @@ import (
 	"github.com/catmandude/nic-jackson-go/data"
 	"log"
 	"net/http"
+	"regexp"
+	"strconv"
 )
 
 type Products struct {
@@ -21,6 +23,29 @@ func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	} else if r.Method == http.MethodPost {
 		p.addProduct(rw, r)
 		return
+	} else if r.Method == http.MethodPut {
+		p.l.Println("Put")
+		reg := regexp.MustCompile(`/([0-9]+)`)
+		g := reg.FindAllStringSubmatch(r.URL.Path, -1)
+
+		if len(g) != 1 {
+			http.Error(rw, "Invalid URI", http.StatusBadRequest)
+			return
+		}
+
+		if len(g[0]) != 1 {
+			http.Error(rw, "invalid URI", http.StatusBadRequest)
+			return
+		}
+
+		idString := g[0][1]
+		id, err := strconv.Atoi(idString)
+		if err != nil {
+			http.Error(rw, "invalid URI", http.StatusBadRequest)
+			return
+		}
+
+		p.l.Println("got id", id)
 	}
 
 	//catch all
