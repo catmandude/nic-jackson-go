@@ -33,7 +33,7 @@ func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if len(g[0]) != 1 {
+		if len(g[0]) != 2 {
 			http.Error(rw, "invalid URI", http.StatusBadRequest)
 			return
 		}
