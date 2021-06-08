@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/catmandude/nic-jackson-go/data"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
@@ -75,6 +76,10 @@ func (p *Products) addProduct(rw http.ResponseWriter, r *http.Request) {
 }
 
 func (p *Products) UpdateProduct(id int, rw http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	id := vars["id"]
+
 	p.l.Println("Handle PUT products")
 	prod := &data.Product{}
 

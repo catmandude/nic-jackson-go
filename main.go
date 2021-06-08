@@ -22,7 +22,7 @@ func main() {
 	//sm.Handle("/products", ph)
 
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
-	putRouter.HandleFunc("/{id:[0-9]+}", ph.UP)
+	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProduct)
 
 	s := http.Server{
 		Addr: ":9090",
