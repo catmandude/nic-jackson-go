@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Products struct {
@@ -77,9 +78,11 @@ func (p *Products) addProduct(rw http.ResponseWriter, r *http.Request) {
 
 func (p *Products) UpdateProduct(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+	id, error := strconv.Atoi(vars["id"])
 
-	id := vars["id"]
-
+	if error != nil {
+		http.Error(rw, "ID error", http.StatusBadRequest)
+	}
 	p.l.Println("Handle PUT products")
 	prod := &data.Product{}
 
