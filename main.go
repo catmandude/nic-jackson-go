@@ -24,6 +24,9 @@ func main() {
 	putRouter := sm.Methods(http.MethodPut).Subrouter()
 	putRouter.HandleFunc("/{id:[0-9]+}", ph.UpdateProduct)
 
+	postRouter := sm.Methods(http.MethodPost).Subrouter()
+	postRouter.HandleFunc("/product", ph.Add)
+
 	s := http.Server{
 		Addr: ":9090",
 		Handler: sm, //specify our servemux
