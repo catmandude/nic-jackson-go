@@ -45,7 +45,7 @@ func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		p.updateProduct(id, rw http.ResponseWriter, r*http.Request{})
+		p.updateProduct(id, rw, r)
 		p.l.Println("got id", id)
 	}
 
@@ -84,7 +84,7 @@ func (p *Products) updateProduct(id int, rw http.ResponseWriter, r *http.Request
 		http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
 	}
 
-	err != data.UpdateProduct(id, prod)
+	err = data.UpdateProduct(id, prod)
 
 	if err == data.ErrProductNotFound {
 		http.Error(rw, "Product Not Found", http.StatusNotFound)

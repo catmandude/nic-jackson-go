@@ -55,7 +55,7 @@ func UpdateProduct(id int, p*Product) error {
 	return nil
 }
 
-var ErrProductNotFound = fmt.Error("Product Not found")
+var ErrProductNotFound = fmt.Errorf("Product Not found")
 
 func findProduct(id int) (*Product, int, error) {
 	for i, p := range productList {
