@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
@@ -14,8 +15,11 @@ func main() {
 	l := log.New(os.Stdout, "product-api", log.LstdFlags)
 	ph := handlers.NewProducts(l)
 
-	sm := http.NewServeMux() //points to the endpoint /thing
-	sm.Handle("/", ph)
+	sm := mux.NewRouter() //points to the endpoint /thing
+
+	getRouter := sm.Methods("GET").Subrouter()
+	getRouter.HandleFunc("/", ph.GetProducts)
+	//sm.Handle("/products", ph)
 
 	s := http.Server{
 		Addr: ":9090",
