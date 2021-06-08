@@ -74,7 +74,7 @@ func (p *Products) addProduct(rw http.ResponseWriter, r *http.Request) {
 	data.AddProduct(prod)
 }
 
-func (p *Products) updateProduct(id int, rw http.ResponseWriter, r *http.Request) {
+func (p *Products) UpdateProduct(id int, rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle PUT products")
 	prod := &data.Product{}
 

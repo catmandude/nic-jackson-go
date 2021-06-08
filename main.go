@@ -17,9 +17,12 @@ func main() {
 
 	sm := mux.NewRouter() //points to the endpoint /thing
 
-	getRouter := sm.Methods("GET").Subrouter()
+	getRouter := sm.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/", ph.GetProducts)
 	//sm.Handle("/products", ph)
+
+	putRouter := sm.Methods(http.MethodPut).Subrouter()
+	putRouter.HandleFunc("/{id:[0-9]+}", ph.UP)
 
 	s := http.Server{
 		Addr: ":9090",
