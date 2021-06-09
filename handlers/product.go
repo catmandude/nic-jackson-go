@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"context"
 )
 
 type Products struct {
@@ -116,7 +117,7 @@ func (p *Products) MiddlewareProductsValidation(next http.Handler) http.Handler 
 			http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
 		}
 
-		ctx := context.WithValue(KeyProduct{}, prod)
+		ctx := context.WithValue(r.Context(),KeyProduct{}, prod)
 		req := r.WithContext(ctx)
 
 		next.ServeHTTP(rw, req)
