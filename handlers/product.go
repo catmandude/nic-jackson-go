@@ -95,9 +95,30 @@ func (p *Products) UpdateProduct(rw http.ResponseWriter, r *http.Request) {
 
 	if err == data.ErrProductNotFound {
 		http.Error(rw, "Product Not Found", http.StatusNotFound)
+		return
 	}
 
 	if err != nil {
 		http.Error(rw, "Product Not Found", http.StatusInternalServerError)
+		return
 	}
+}
+
+
+type KeyProduct struct{}
+
+func (p *Products) MiddlewareProductsValidation(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, r*http.Request) {
+		prod := data.Product{}
+
+		err := prod.FromJSON(r.Body)
+		if err != nil {
+			http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
+		}
+
+		ctx := context.WithValue(KeyProduct{}, prod)
+		req := r.WithContext(ctx)
+
+		next.ServeHTTP(rw, req)
+	})
 }
