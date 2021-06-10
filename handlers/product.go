@@ -2,7 +2,7 @@
 //
 // Docs for Product API
 //
-// Schemes
+// Schemes: http
 // BasePath: /
 // Version: 1.0.0
 //
