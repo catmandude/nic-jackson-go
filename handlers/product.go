@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/catmandude/nic-jackson-go/data"
 	"github.com/gorilla/mux"
 	"log"
@@ -115,6 +116,12 @@ func (p *Products) MiddlewareProductsValidation(next http.Handler) http.Handler 
 		err := prod.FromJSON(r.Body)
 		if err != nil {
 			http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
+		}
+
+		err = prod.Validate()
+		if err != nil {
+			p.l.Println("[ERROR] validationg product", err)
+			http.Error(rw, fmt.Sprintf("Error Validationg product: %s", err), http.StatusBadRequest)
 		}
 
 		ctx := context.WithValue(r.Context(),KeyProduct{}, prod)
